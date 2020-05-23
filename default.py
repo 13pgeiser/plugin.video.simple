@@ -112,6 +112,18 @@ def play3():
 
   xbmcplugin.setResolvedUrl(_handle, True, listitem=play_item)
 
+
+def play4():
+  play_item = xbmcgui.ListItem(path='https://rtsun-euwe.akamaized.net/5f6cc644-70fa-4adf-9f94-b673f9fe486f/rts1.ism/manifest(format=mpd-time-csf,encryption=cenc)')
+  play_item.setProperty('inputstream.adaptive.license_type', 'com.widevine.alpha')
+  play_item.setProperty('inputstream.adaptive.license_key', 'https://srg.live.ott.irdeto.com/licenseServer/widevine/v1/SRG/license?contentId=RTS1|origin=https://player.rts.ch&sec-fetch-site=cross-site&sec-fetch-mode=cors&user-agent=Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.162 Mobile Safari/537.36&referer=https://player.rts.ch/p/rts/portal-detail?urn=urn:rts:video:3608506&autoplay=true&Content-Type=&sec-fetch-dest=empty|R{SSM}|')
+  play_item.setProperty('inputstream.adaptive.manifest_type', 'mpd')
+  play_item.setProperty('inputstreamaddon', 'inputstream.adaptive')
+  play_item.setProperty('inputstream.adaptive.manifest_update_parameter', 'full')
+  play_item.setMimeType('application/dash+xml')
+  play_item.setContentLookup(False)
+  xbmcplugin.setResolvedUrl(_handle, True, listitem=play_item)
+
 if __name__ == '__main__':
   # Call the router function and pass the plugin call parameters to it.
   # We use string slicing to trim the leading '?' from the plugin call paramstring
@@ -123,6 +135,8 @@ if __name__ == '__main__':
     play2()
   elif params and params['action'] == 'play3':
     play3()
+  elif params and params['action'] == 'play4':
+    play4()
   else:
     xbmcplugin.setPluginCategory(_handle, 'Samples')
     xbmcplugin.setContent(_handle, 'videos')
@@ -140,5 +154,10 @@ if __name__ == '__main__':
     list_item.setProperty('IsPlayable', 'true')
     list_item.setInfo('video', {'mediatype': 'video'})
     xbmcplugin.addDirectoryItem(_handle, _url + '?action=play3', list_item, False)
+
+    list_item = xbmcgui.ListItem(label='RTS UN')
+    list_item.setProperty('IsPlayable', 'true')
+    list_item.setInfo('video', {'mediatype': 'video'})
+    xbmcplugin.addDirectoryItem(_handle, _url + '?action=play4', list_item, False)
 
     xbmcplugin.endOfDirectory(_handle)
